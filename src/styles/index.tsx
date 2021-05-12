@@ -14,7 +14,6 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   background: #FFFCF9;
   padding-top: ${_ => `${statusBarHeight}px`};
-  z-index: 0;
 `;
 
 export const Title = styled.Text<{ color?: string, bold?: boolean, size?: number }>`

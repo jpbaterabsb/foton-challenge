@@ -51,7 +51,7 @@ export const BookScreen: React.FC = () => {
             marginLeft: 33,
             marginBottom: 15
           }}>
-            <Ionicons name="arrow-back-sharp" size={24} color="black" />
+            <Ionicons name="arrow-back-sharp" size={24} color="black" onPress={() => navigation.goBack()} />
           </View>
           <View
             style={{ alignSelf: 'center' }}

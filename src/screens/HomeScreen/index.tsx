@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import Search from '../../../assets/svg/search.svg';
 import { BoxShadow } from 'react-native-shadow';
 import { useNavigation } from '@react-navigation/native';
+import { BookInput } from '../../components/Input';
 import _ from 'lodash';
 
 
@@ -86,22 +87,13 @@ export const HomeScreen: React.FC = () => {
   return (
     <Container>
       <Header>
-        <InputBox
-          style={{
-            elevation: 1,
-          }}
-        >
-          <Icon>
-            <Search width={16} height={16} />
-          </Icon>
-          <Input />
-        </InputBox>
+        <BookInput icon={Search} />
         <TitleBox>
           <Title>
             Hi,
             </Title>
           <Title bold color='#FF6978'>
-            Mehmed Al Fatih
+            Mehmed Al Fatihr
             </Title>
           <Title>
             👋
@@ -112,7 +104,7 @@ export const HomeScreen: React.FC = () => {
       <FlatBook
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         data={configBooks(books)}
-        renderItem={({item}) => Books({item, navigation})}
+        renderItem={({ item }) => Books({ item, navigation })}
         numColumns={3}
       />
       {/* </Body> */}
