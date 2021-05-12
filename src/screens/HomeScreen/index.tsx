@@ -1,11 +1,8 @@
 import React, { Fragment } from 'react';
 import Search from '../../../assets/svg/search.svg';
-import { BoxShadow } from 'react-native-shadow';
 import { useNavigation } from '@react-navigation/native';
 import { BookInput } from '../../components/Input';
 import _ from 'lodash';
-
-
 
 import {
   Header,
@@ -22,6 +19,7 @@ import {
 } from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Container, Title } from '../../styles';
+import { Shadow } from 'react-native-shadow-2';
 
 const shadowOpt = {
   width: 105,
@@ -64,14 +62,21 @@ const Books = ({ item, navigation }: { item: { id: string, hidden?: boolean }, n
   return (
     <BookView key={item.id}>
       {!item.hidden && (
-        <TouchableOpacity onPress={() => goToBook(item.id)}>
-          <BoxShadow setting={shadowOpt}>
+        <Shadow
+          // distance={1}
+          offset={[0, 2]}
+          radius={5}
+          startColor="rgba(229, 229, 229, 0.6)"
+        >
+          <TouchableOpacity onPress={() => goToBook(item.id)}>
+
             <BookCover
               source={{ uri: "https://editoraflutuante.com.br/wp-content/uploads/2018/08/Quarta-Capa-Frente-1.jpg" }}
             >
             </BookCover>
-          </BoxShadow>
-        </TouchableOpacity>
+
+          </TouchableOpacity>
+        </Shadow>
       )}
       <BookInfoBox>
         <Title bold size={12} color={'rgba(49, 49, 49, 0.8)'}>The One Thing</Title>
