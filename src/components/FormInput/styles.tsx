@@ -11,3 +11,8 @@ export const FormLabel = styled.Text`
   margin-bottom: 10px;
   color: #000000;
 `;
+
+export const ErrorText = styled.Text`
+  font-family: 'SFProText';
+  color: red;
+`;

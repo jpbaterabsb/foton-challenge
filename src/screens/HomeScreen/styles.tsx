@@ -1,6 +1,7 @@
 import styled, { ReactNativeThemedStyledFunction } from 'styled-components/native';
 import Constants from 'expo-constants';
-import { Dimensions, Text, Platform } from 'react-native';
+import { Dimensions, Text, Platform, FlatList } from 'react-native';
+import { Book } from '../../types/Book';
 
 
 const { height, width } = Dimensions.get('window');
@@ -51,6 +52,9 @@ export const AuthorText = styled.Text<{ color?: string, bold?: boolean, size?: n
   font-size: 10px;
   line-height: 12px;
   color: rgba(49, 49, 49, 0.8);
+  &:before {
+    content: "by ";
+  }
 `;
 
 export const Body = styled.ScrollView.attrs(() => ({
@@ -65,7 +69,7 @@ export const Body = styled.ScrollView.attrs(() => ({
   padding: ${_ => `0px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`}
 `;
 
-export const FlatBook = styled.FlatList`
+export const FlatBook = styled(FlatList as new () => FlatList<Book>)`
   margin-top: 36px;
   
   padding: ${_ => `0px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`};

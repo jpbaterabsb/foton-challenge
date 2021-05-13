@@ -75,6 +75,6 @@ const BookRouter = () => (
     headerShown: false,
   }}
   >
-    <Stack.Screen name="Book" component={BookScreen} />
+    <Stack.Screen name="Detail" component={BookScreen} />
   </Stack.Navigator>
 );

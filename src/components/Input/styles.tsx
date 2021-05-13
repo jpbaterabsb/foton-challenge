@@ -1,12 +1,9 @@
-import styled, { ReactNativeThemedStyledFunction } from 'styled-components/native';
-import Constants from 'expo-constants';
-import { Dimensions, Text, Platform, TextInput } from 'react-native';
+import styled from 'styled-components/native';
+import { Dimensions, TextInput } from 'react-native';
 import React from 'react';
 
 
-const { height, width } = Dimensions.get('window');
-const statusBarHeight = Constants.statusBarHeight;
-const defaultPaddingHeight = height * 0.07;
+const { width } = Dimensions.get('window');
 const defaultPaddingWidth = width * 0.05;
 
 export const InputBox = styled.View<{numberOfLines: number}>`

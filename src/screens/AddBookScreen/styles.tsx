@@ -1,6 +1,7 @@
 import styled, { ReactNativeThemedStyledFunction } from 'styled-components/native';
 import Constants from 'expo-constants';
-import { Dimensions, Text, Platform } from 'react-native';
+import { Dimensions, Text, Platform, Button } from 'react-native';
+import React from 'react';
 
 
 const { height, width } = Dimensions.get('window');
@@ -25,13 +26,14 @@ export const PageTitle = styled.Text`
   margin: ${() => `53px 20px 0px` };
 `;
 
-export const FormView = styled.View`
+export const ScrollFormView = styled.ScrollView`
   flex: 1;
 `;
 
-
-
-
+export const FormView = styled.View`
+  flex: 1;
+  padding-bottom: 120px;
+`;
 
 export const AuthorText = styled.Text<{ color?: string, bold?: boolean, size?: number }>`
   font-family: 'Roboto' ;
@@ -40,4 +42,12 @@ export const AuthorText = styled.Text<{ color?: string, bold?: boolean, size?: n
   font-size: 10px;
   line-height: 12px;
   color: rgba(49, 49, 49, 0.8);
+`;
+
+export const ButtonView = styled.View`
+  position: absolute;
+  width: ${width-40}px;
+  bottom: 38px;
+  left: 20px;
+  right: 20px;
 `;

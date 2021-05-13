@@ -1,12 +1,5 @@
-import styled, { ReactNativeThemedStyledFunction } from 'styled-components/native';
-import Constants from 'expo-constants';
+import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
-
-
-const { height, width } = Dimensions.get('window');
-const statusBarHeight = Constants.statusBarHeight;
-const defaultPaddingHeight = height * 0.07;
-const defaultPaddingWidth = width * 0.05;
 
 export const Container = styled.View`
   display: flex;
@@ -58,44 +51,20 @@ export const BookTitle = styled.Text.attrs(() => ({
   line-height: 29px;
   letter-spacing: 1.5px;
 `;
-
-
-export const BottomView = styled.View`
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 53px;
-  height: 56px;
-  elevation: 8;
-  background: #FFF;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 2px;
-
+export const BackArrowView = styled.View`
+  width: ${Dimensions.get('window').width}px;
+  margin-top: 55;
+  margin-left: 33;
+  margin-bottom: 15;
 `;
 
-export const BottomViewBox = styled.View`
-  flex-direction: row;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-`;
 
-export const Divider = styled.View`
-  width: 0.1px;
-  height: 16px;
-  border: 1px solid rgba(151, 151, 151, 0.2);
-`;
-
-export const BottomMenuTitle = styled.Text`
-  font-family: 'SFProBold';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 1px;
-  color: #3F4043;
-  margin-left: 10px;
+export const WallPaper = styled.ImageBackground.attrs(() => ({
+  imageStyle: {
+    resizeMode: 'stretch'
+  }
+}))`
+  width: 100%;
+  height: 282px;
 `;
 

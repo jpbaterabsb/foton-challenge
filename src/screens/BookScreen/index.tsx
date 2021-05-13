@@ -1,67 +1,60 @@
-import React, { Fragment } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import _ from 'lodash';
-import { Container, BookTitleBox, BookTitle, BookAuthor, DescriptionView, Description, BottomView, BottomViewBox, BottomMenuTitle, Divider } from './styles';
-import { Dimensions, ImageBackground, View, Image, Text } from 'react-native';
-import image from '../../../assets/images/book-background.png';
-import sprint from '../../../assets/images/Sprint.png';
-import { Ionicons, Feather } from '@expo/vector-icons';
-
+import { Container, BookTitleBox, BookTitle, BookAuthor, DescriptionView, Description, BackArrowView } from './styles';
+import { ImageBackground, View, Image, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Shadow } from 'react-native-shadow-2';
+import { Book } from '../../types/Book';
+import { BottomMenu } from '../../components/BottomMenu';
+import { BACKGROUND_DEFAULT_IMAGE_DETAILS, DEFAULT_BOOK_COVER } from '../../constants';
 
+type ParamList = {
+  Book: {
+    book: Book;
+  };
+};
 
-const BottomMenu: React.FC = () => {
-  return (
-      <BottomView>
-        <BottomViewBox>
-          <Feather name="book-open" size={24} color="#CFCBD2" />
-          <BottomMenuTitle>Read</BottomMenuTitle>
-        </BottomViewBox>
-        <Divider />
-        <BottomViewBox>
-          <Feather name="headphones" size={24} color="#CFCBD2" />
-          <BottomMenuTitle>Listen</BottomMenuTitle>
-        </BottomViewBox>
-        <Divider />
-        <BottomViewBox>
-          <Feather name="share" size={24} color="#CFCBD2" />
-          <BottomMenuTitle>Share</BottomMenuTitle>
-        </BottomViewBox>
-      </BottomView>
-  );
-}
+const classes = StyleSheet.create({
+  imageBackgroundStyle: {
+    flex: 1,
+    width: '100%',
+    height: 282
+  },
+  imageBackgroundImageStyle: {
+    resizeMode: 'stretch'
+  },
+  image: {
+    width: 151,
+    height: 234
+  }
+});
+
 
 export const BookScreen: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute<RouteProp<ParamList, 'Book'>>();
+  const { book } = route.params;
+
   return (
     <Container>
-      <ImageBackground source={image} style={{
-        flex: 1,
-        width: '100%',
-        height: 282
-      }}
-        imageStyle={{
-          resizeMode: 'stretch'
-        }}
+      <ImageBackground source={BACKGROUND_DEFAULT_IMAGE_DETAILS}
+        style={classes.imageBackgroundStyle}
+        imageStyle={classes.imageBackgroundImageStyle}
       >
         <View style={{ flex: 1 }}>
-          <View style={{
-            width: Dimensions.get('window').width,
-            marginTop: 55,
-            marginLeft: 33,
-            marginBottom: 15
-          }}>
+          <BackArrowView>
             <Ionicons name="arrow-back-sharp" size={24} color="black" onPress={() => navigation.goBack()} />
-          </View>
+          </BackArrowView>
           <View
             style={{ alignSelf: 'center' }}
           >
             <Shadow
               distance={8} startColor={'#EEE'}
             >
-              <Image source={sprint}
-                width={151}
-                height={234}
+              <Image 
+                source={book.coverBookUrl ? { uri: book.coverBookUrl } : DEFAULT_BOOK_COVER}
+                style={classes.image}
               >
               </Image>
             </Shadow>
@@ -69,23 +62,23 @@ export const BookScreen: React.FC = () => {
           <BookTitleBox>
             <Text>
               <BookTitle bold>
-                Hooked:
+                {`${book.name}:`}
               </BookTitle>
               <BookTitle >
                 {" "}
               </BookTitle>
               <BookTitle >
-                How to Build Habid-Forming Products
+                {book.caption}
               </BookTitle>
             </Text>
             <BookAuthor>
-              Nir Eyal
+              {book.author}
             </BookAuthor>
           </BookTitleBox>
           <DescriptionView>
             <Description>
-              How do successful companies create products people can’t put down? Why do some products capture widespread attention while others flop?Why do some products capture widespread attention while others flop?Why do some products capture widespread attention while others flop?
-              </Description>
+              {book.description}
+            </Description>
           </DescriptionView>
         </View>
       </ImageBackground>

@@ -1,14 +1,15 @@
 import React from 'react';
 
 import { InputBox, IconView, Input } from './styles';
-import { TextInputChangeEventData, NativeSyntheticEvent, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
+import { SvgProps } from "react-native-svg";
 
 export type InputProps = React.ComponentProps<typeof TextInput> & React.ComponentProps<typeof Shadow> & {
-  icon?: React.ComponentType<{ width: number, height: number }>;
+  icon?: React.ComponentType<SvgProps>;
 };
 
-export const BookInput: React.FC<InputProps> = ({ icon: Icon, onChange, distance, startColor, radius, numberOfLines = 1, multiline }) => {
+export const BookInput: React.FC<InputProps> = ({ icon: Icon, onChangeText, distance, startColor, radius, numberOfLines = 1, multiline }) => {
   return (
     <Shadow
     distance={ distance ? distance : undefined}
@@ -26,7 +27,7 @@ export const BookInput: React.FC<InputProps> = ({ icon: Icon, onChange, distance
         )}
         <Input
           hasIcon={!!Icon}
-          onChange={onChange}
+          onChangeText={onChangeText}
           numberOfLines={numberOfLines}
           multiline={multiline}
         />
