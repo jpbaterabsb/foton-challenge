@@ -87,8 +87,8 @@ export const AddBookScreen: React.FC = () => {
           />
 
           <FormInput
-            error={errors.coverBookUrl}
-            onChangeText={v => setValue('coverBookUrl', v)}
+            error={errors.book_cover_url}
+            onChangeText={v => setValue('book_cover_url', v)}
             label="Cover Book URL"
             startColor="rgba(212, 173, 134, 0.4926)"
             distance={45}

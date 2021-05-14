@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Search from '../../../assets/svg/search.svg';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { BookInput } from '../../components/Input';
@@ -18,23 +18,16 @@ import { Container, Title } from '../../styles';
 import { Shadow } from 'react-native-shadow-2';
 import { Book } from '../../types/Book';
 import { DEFAULT_BOOK_COVER } from '../../constants';
+import { api } from '../../constants';
+import { Loader } from '../../components/Loader';
+import { Metadata } from '../../types/Metadata';
 
-const books: Book[] = _.range(1, 8).map(key => (
-  {
-    id: key.toString(),
-    coverBookUrl: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1594616847',
-    name: 'legal',
-    caption: 'bom',
-    author: 'Jonathan',
-    description: 'How do successful companies create products people can’t put down? Why do some products capture widespread attention while others flop?Why do some products capture widespread attention while others flop?Why do some products capture widespread attention while others flop?'
-  }
-));
 
 function configBooks(books: Book[]): Book[] {
   const number = books.length % 3;
 
   if (number === 2) {
-    return _.concat(books, _.fill(Array(number), { id: _.random(books.length, books.length + 3).toString(), hidden: true }))
+    return _.concat(books, _.fill(Array(number), { id: _.uniqueId().toString(), hidden: true }))
   }
 
   return books;
@@ -64,7 +57,7 @@ const Books = ({ item, navigation }: BooksParams) => {
         >
           <TouchableOpacity onPress={() => goToBook(item.id.toString())}>
             <BookCover
-              source={item.coverBookUrl ? { uri: item.coverBookUrl } : DEFAULT_BOOK_COVER}
+              source={item.book_cover_url ? { uri: item.book_cover_url } : DEFAULT_BOOK_COVER}
             >
             </BookCover>
 
@@ -72,20 +65,95 @@ const Books = ({ item, navigation }: BooksParams) => {
         </Shadow>
       )}
       <BookInfoBox>
-        <Title bold size={12} color={'rgba(49, 49, 49, 0.8)'}>{item.name}</Title>
-        <AuthorText>{item.author}</AuthorText>
+        <Title bold size={12} color={'rgba(49, 49, 49, 0.8)'} numberOfLines={1}>{item.name}</Title>
+        <AuthorText numberOfLines={1}>{item.author}</AuthorText>
       </BookInfoBox>
     </BookView>
   )
 };
 
+export type GetBooksResponse = {
+  data: Book[],
+  meta: Metadata
+};
 
 export const HomeScreen: React.FC = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [stop, setStop] = useState<boolean>(false);
+  const [page, setPage] = useState<string>('/?page=1');
+  const [error, setError] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [isLoading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation();
+
+  async function load({ paramName, paramPage }: { paramName?: string, paramPage?: string }) {
+    try {
+      const { data } = await api.get<GetBooksResponse>(`/books?name=${paramName}&${paramPage?.substring(2)}`);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const loadRepositories = async () => {
+    if (!page) {
+      return null;
+    };
+    const d = await load({paramName: name, paramPage: page});
+    if(d) {
+      setName(name);
+      setPage(d.meta.next_page_url);
+      setError("");
+      setBooks([...books,...d.data]);
+    }
+
+  }
+
+  async function searchBook(name: string) {
+    setLoading(true);
+    const d = await load({ paramName: name, paramPage: '/?page=1' });
+    setLoading(false);
+    if(d) {
+      setName(name);
+      setPage(d.meta.next_page_url);
+      setError("");
+      setBooks(d.data);
+    }
+  }
+
+
+  async function clear() {
+    setLoading(true);
+    const d = await load({paramName: '', paramPage: '/?page=1'});
+    setLoading(false);
+    if(d) {
+      setName('');
+      setPage(d.meta.next_page_url);
+      setError("");
+      setBooks(d.data);
+    }
+  }
+
+  const onChangeName = _.debounce(searchBook, 300);
+
+  const ListFooterComponent = () => {
+    if (!page) {
+      return null;
+    };
+    return <Loader />;
+  };
+
+  useEffect(() => {
+    load({ paramName: '', paramPage: '/?page=1' });
+  }, []);
+
   return (
     <Container>
       <Header>
-        <BookInput icon={Search} />
+        <BookInput icon={Search}
+          onChangeText={onChangeName}
+          onClear={clear}
+        />
         <TitleBox>
           <Title>
             Hi,
@@ -98,12 +166,21 @@ export const HomeScreen: React.FC = () => {
             </Title>
         </TitleBox>
       </Header>
-      <FlatBook
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        data={configBooks(books)}
-        renderItem={({ item }) => Books({ item, navigation })}
-        numColumns={3}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <FlatBook
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          data={configBooks(books)}
+          renderItem={({ item }) => Books({ item, navigation })}
+          numColumns={3}
+          onEndReached={loadRepositories}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={ListFooterComponent}
+        />
+      )
+
+      }
     </Container>
   );
 }

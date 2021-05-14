@@ -1,6 +1,6 @@
 export type Book = {
   id: string,
-  coverBookUrl?:string,
+  book_cover_url?:string,
   name?: string,
   caption?: string,
   author?: string,

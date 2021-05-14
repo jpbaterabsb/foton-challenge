@@ -30,6 +30,7 @@ export const BookAuthor = styled.Text`
 export const DescriptionView = styled.ScrollView.attrs({
   contentContainerStyle: { flexGrow: 1, marginHorizontal: 20 }
 })`
+  
 `;
 
 export const Description = styled.Text`
@@ -37,7 +38,7 @@ export const Description = styled.Text`
   font-size: 14px;
   line-height: 25px;
   letter-spacing: 0.2px;
-
+  padding-bottom: 134px;
   color: rgba(49, 49, 49, 0.6);
 `;
 
@@ -53,9 +54,9 @@ export const BookTitle = styled.Text.attrs(() => ({
 `;
 export const BackArrowView = styled.View`
   width: ${Dimensions.get('window').width}px;
-  margin-top: 55;
-  margin-left: 33;
-  margin-bottom: 15;
+  margin-top: 55px;
+  margin-left: 33px;
+  margin-bottom: 15px;
 `;
 
 

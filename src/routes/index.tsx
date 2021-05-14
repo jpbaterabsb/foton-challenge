@@ -62,8 +62,8 @@ const MainRouter = () => {
       }}
   
     >
-      <Tab.Screen name='Add Book' component={AddBookScreen} />
       <Tab.Screen name='Home' component={HomeScreen} />
+      <Tab.Screen name='Add Book' component={AddBookScreen} />
       <Tab.Screen name='Profile' component={ProfileScreen} />
     </Tab.Navigator>
   );

@@ -71,8 +71,7 @@ export const Body = styled.ScrollView.attrs(() => ({
 
 export const FlatBook = styled(FlatList as new () => FlatList<Book>)`
   margin-top: 36px;
-  
-  padding: ${_ => `0px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`};
+  padding: ${_ => `0px ${defaultPaddingWidth}px 70px ${defaultPaddingWidth}px`};
 `;
 
 

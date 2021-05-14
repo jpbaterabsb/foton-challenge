@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import _ from 'lodash';
 import { Container, BookTitleBox, BookTitle, BookAuthor, DescriptionView, Description, BackArrowView } from './styles';
@@ -52,24 +52,28 @@ export const BookScreen: React.FC = () => {
             <Shadow
               distance={8} startColor={'#EEE'}
             >
-              <Image 
-                source={book.coverBookUrl ? { uri: book.coverBookUrl } : DEFAULT_BOOK_COVER}
+              <Image
+                source={book.book_cover_url ? { uri: book.book_cover_url } : DEFAULT_BOOK_COVER}
                 style={classes.image}
               >
               </Image>
             </Shadow>
           </View>
           <BookTitleBox>
-            <Text>
+            <Text numberOfLines={2}>
               <BookTitle bold>
-                {`${book.name}:`}
+                {`${book.name}`}
               </BookTitle>
-              <BookTitle >
-                {" "}
-              </BookTitle>
-              <BookTitle >
-                {book.caption}
-              </BookTitle>
+              {book.caption && (
+                <Fragment>
+                  <BookTitle >
+                    {": "}
+                  </BookTitle>
+                  <BookTitle >
+                    {book.caption}
+                  </BookTitle>
+                </Fragment>
+              )}
             </Text>
             <BookAuthor>
               {book.author}
