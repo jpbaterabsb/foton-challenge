@@ -17,10 +17,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Container, Title } from '../../styles';
 import { Shadow } from 'react-native-shadow-2';
 import { Book } from '../../types/Book';
-import { DEFAULT_BOOK_COVER } from '../../constants';
+import { DEFAULT_BOOK_COVER, ERROR_MESSAGE } from '../../constants';
 import { api } from '../../constants';
 import { Loader } from '../../components/Loader';
 import { Metadata } from '../../types/Metadata';
+import { Alert } from 'react-native';
 
 
 function configBooks(books: Book[]): Book[] {
@@ -91,22 +92,25 @@ export const HomeScreen: React.FC = () => {
       const { data } = await api.get<GetBooksResponse>(`/books?name=${paramName}&${paramPage?.substring(2)}`);
       return data;
     } catch (e) {
-      console.log(e);
     }
   }
 
   const loadRepositories = async () => {
-    if (!page) {
+    try {
+      if (!page) {
+        return null;
+      };
+      const d = await load({paramName: name, paramPage: page});
+      if(d) {
+        setName(name);
+        setPage(d.meta.next_page_url);
+        setError("");
+        setBooks([...books,...d.data]);
+      }
+    } catch(e) {
+      console.log(e);
       return null;
-    };
-    const d = await load({paramName: name, paramPage: page});
-    if(d) {
-      setName(name);
-      setPage(d.meta.next_page_url);
-      setError("");
-      setBooks([...books,...d.data]);
     }
-
   }
 
   async function searchBook(name: string) {
@@ -144,7 +148,23 @@ export const HomeScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    load({ paramName: '', paramPage: '/?page=1' });
+    async function init() {
+      try {        
+        setLoading(true);
+        const d = await load({ paramName: '', paramPage: '/?page=1' });
+        if(d) {
+          setName('');
+          setPage(d.meta.next_page_url);
+          setError("");
+          setBooks(d.data);
+        }
+      } catch(e) {
+        Alert.alert(ERROR_MESSAGE);
+      } finally {
+        setLoading(false);
+      }
+    }
+    init();
   }, []);
 
   return (
@@ -159,7 +179,7 @@ export const HomeScreen: React.FC = () => {
             Hi,
             </Title>
           <Title bold color='#FF6978'>
-            Mehmed Al Fatihr
+            Mehmed Al Fatih
             </Title>
           <Title>
             👋

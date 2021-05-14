@@ -22,7 +22,8 @@ export const BookInput: React.FC<InputProps> = ({
   radius,
   numberOfLines = 1,
   multiline,
-  onClear
+  onClear,
+  value
 }) => {
   const inputRef = useRef<TextInput>();
   return (
@@ -41,10 +42,12 @@ export const BookInput: React.FC<InputProps> = ({
           </IconView>
         )}
         <Input
+          hasClear={!!onClear}
           hasIcon={!!Icon}
           onChangeText={onChangeText}
           numberOfLines={numberOfLines}
           multiline={multiline}
+          value={value}
           ref={inputRef}
         />
         {onClear && (

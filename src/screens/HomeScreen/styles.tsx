@@ -1,11 +1,10 @@
-import styled, { ReactNativeThemedStyledFunction } from 'styled-components/native';
+import styled from 'styled-components/native';
 import Constants from 'expo-constants';
-import { Dimensions, Text, Platform, FlatList } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 import { Book } from '../../types/Book';
 
 
 const { height, width } = Dimensions.get('window');
-const statusBarHeight = Constants.statusBarHeight;
 const defaultPaddingHeight = height * 0.07;
 const defaultPaddingWidth = width * 0.05;
 
@@ -15,7 +14,7 @@ export const InputBox = styled.View`
   flex-direction: row;
   background: #FDFCFC;
   border-radius: 10px;
-  width: ${_ => `${width - defaultPaddingWidth * 2}px`}
+  width: ${_ => `${width - defaultPaddingWidth * 2}px`};
 `;
 
 export const Icon = styled.View`
@@ -35,7 +34,7 @@ export const Input = styled.TextInput`
 
 export const Header = styled.View`
   display: flex;
-  padding: ${_ => `${defaultPaddingHeight}px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`}
+  padding: ${_ => `${defaultPaddingHeight}px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`};
 `;
 
 
@@ -66,7 +65,7 @@ export const Body = styled.ScrollView.attrs(() => ({
 }))`
   margin-top: 36px;
   background: red;
-  padding: ${_ => `0px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`}
+  padding: ${_ => `0px ${defaultPaddingWidth}px 0px ${defaultPaddingWidth}px`};
 `;
 
 export const FlatBook = styled(FlatList as new () => FlatList<Book>)`

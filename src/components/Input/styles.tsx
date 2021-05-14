@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions, TextInput } from 'react-native';
-import React, {RefObject} from 'react';
+import React from 'react';
 
 
 const { width } = Dimensions.get('window');
@@ -23,11 +23,11 @@ export const IconView = styled.View`
   align-items: center;
 `;
 
-type InputProps = {hasIcon: boolean, ref: any} & React.ComponentPropsWithRef<typeof TextInput>;
+type InputProps = {hasIcon: boolean, ref: any, hasClear: boolean} & React.ComponentPropsWithRef<typeof TextInput>;
 
 export const Input = styled.TextInput<InputProps>`
   height: ${({numberOfLines}) =>  numberOfLines ? `${numberOfLines * 45}px` : `45px`};
-  width: ${_ => `${width - 85 - defaultPaddingWidth * 2}px`};
+  width: ${({ hasClear }) => hasClear ? `${width - 85 - defaultPaddingWidth * 2}px` : `${width - 45 - defaultPaddingWidth * 2}px`};
   font-family: 'SFProText';
   padding-left: ${({hasIcon}) => hasIcon ? '0px' : `${20}px`};
   color: #54565A;
