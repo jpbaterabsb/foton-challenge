@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,13 +7,10 @@ import { AddBookScreen } from '../screens/AddBookScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { Feather } from '@expo/vector-icons';
 import { BookScreen } from '../screens/BookScreen';
-import { Keyboard } from 'react-native';
 
-
-
-// import { Container } from './styles';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 export const Router: React.FC = () => {
   return (
     <NavigationContainer 
@@ -35,7 +32,7 @@ const MainRouter = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ color, size }) => {
           let iconName: any;
   
           if (route.name === 'Home') {

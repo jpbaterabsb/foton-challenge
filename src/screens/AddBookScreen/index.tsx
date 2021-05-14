@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Keyboard, Button, View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { FormInput } from '../../components/FormInput';
 
 import { Container } from '../../styles';
@@ -11,7 +11,6 @@ import { PrimaryButton } from '../../components/PrimaryButton';
 import { api } from '../../constants';
 import { Book } from '../../types/Book';
 import {ERROR_MESSAGE, SUCCESS_BOOK_SAVED} from '../../constants';
-import { isLoading } from 'expo-font';
 import { Loader } from '../../components/Loader';
 
 

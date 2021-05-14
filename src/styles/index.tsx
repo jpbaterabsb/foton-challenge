@@ -1,13 +1,7 @@
 import styled from 'styled-components/native';
 import Constants from 'expo-constants';
-import { Dimensions } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
 const statusBarHeight = Constants.statusBarHeight;
-const defaultPaddingHeight = height * 0.07;
-const defaultPaddingWidth = width * 0.05;
-
-
 
 export const Container = styled.SafeAreaView`
   display: flex;

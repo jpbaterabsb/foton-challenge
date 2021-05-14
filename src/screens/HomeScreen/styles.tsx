@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import Constants from 'expo-constants';
 import { Dimensions, FlatList } from 'react-native';
 import { Book } from '../../types/Book';
 

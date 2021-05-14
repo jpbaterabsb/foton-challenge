@@ -1,4 +1,4 @@
-import React, { useRef, RefObject } from 'react';
+import React, { useRef } from 'react';
 
 import { InputBox, IconView, Input } from './styles';
 import { TextInput, View } from 'react-native';
@@ -11,8 +11,6 @@ export type InputProps = React.ComponentProps<typeof TextInput> & React.Componen
   icon?: React.ComponentType<SvgProps>;
   onClear?: any;
 };
-
-type Func = (v?: any) => void;
 
 export const BookInput: React.FC<InputProps> = ({
   icon: Icon,
